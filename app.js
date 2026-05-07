@@ -124,3 +124,74 @@ document.getElementById('btn-cancel-edit').style.display = 'none';
 }
 	 
 function cancelEdit() { clearForm(); }
+
+/* ════════════════════════════════════════════════════════════
+RENDER
+════════════════════════════════════════════════════════════ */
+function renderAll(dishes) {
+renderMenu(dishes);
+renderAdmin(dishes);
+renderStats(dishes);
+}
+	 
+/* --- Menú público --- */
+function renderMenu(dishes) {
+buildFilterBar(dishes);
+const filtered = filterCat === 'all' ? dishes : dishes.filter(d => d.cat === filterCat);
+	 
+const el = document.getElementById('menu-content');
+if (!filtered.length) {
+el.innerHTML = '<div class="empty-state"><span>🍽️</span>No hay platillos en esta categoría todavía.</div>';
+return;
+}
+	 
+// Agrupar por categoría
+const byCat = {};
+filtered.forEach(d => {
+(byCat[d.cat] = byCat[d.cat] || []).push(d);
+});
+	 
+el.innerHTML = Object.entries(byCat).map(([catId, items]) => {
+const c = CATS.find(x => x.id === catId) || CATS[5];
+const cards = items.map(d => `
+<div class="dish-card">
+<div class="dish-emoji">${d.icon || '🍽️'}</div>
+<div class="dish-body">
+<div class="dish-name">${esc(d.name)}</div>
+${d.desc ? `<div class="dish-desc">${esc(d.desc)}</div>` : ''}
+<div class="dish-price">₡${Number(d.price).toLocaleString('es-CR')}</div>
+</div>
+</div>`).join('');
+	 
+return `
+<div class="cat-heading">
+<span class="cat-icon">${c.icon}</span>
+<h2>${c.name}</h2>
+<div class="cat-line"></div>
+</div>
+<div class="dish-grid">${cards}</div>`;
+}).join('');
+}
+	 
+function buildFilterBar(dishes) {
+const activeCats = [...new Set(dishes.map(d => d.cat))];
+const fb = document.getElementById('filter-bar');
+const allBtn = `<button class="pill${filterCat==='all'?' active':''}" data-cat="all" onclick="setFilter('all',this)">Todos (${dishes.length})</button>`;
+const catBtns = CATS.filter(c => activeCats.includes(c.id)).map(c => {
+const count = dishes.filter(d => d.cat === c.id).length;
+return `<button class="pill${filterCat===c.id?' active':''}" data-cat="${c.id}" onclick="setFilter('${c.id}',this)">${c.icon} ${c.name} (${count})</button>`;
+}).join('');
+fb.innerHTML = allBtn + catBtns;
+}
+	 
+function setFilter(cat, btn) {
+filterCat = cat;
+document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+if (btn) btn.classList.add('active');
+if (db) {
+db.ref('platillos').once('value').then(snap => {
+const list = Object.entries(snap.val() || {}).map(([id,v]) => ({id,...v}));
+renderMenu(list);
+});
+}
+}
