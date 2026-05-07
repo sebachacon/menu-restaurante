@@ -1,0 +1,19 @@
+/* variables */
+:root {
+    --cream:
+          #F7F3EC;
+    --paper:
+          #FFFDF8;   
+    --ink:
+          #1C1A15;   
+    --muted:
+          #7A7568;    
+          --border: #E2DAC8;
+          --accent: #B85C2A;
+          --accent2: #2A6648;
+          --danger: #C0392B;
+          --success: #27593F;
+          --radius: 10px;
+        --font-display: 'Playfair Display', Georgia, serif;
+        --font-body: 'DM Sans', sans-serif;
+    }
