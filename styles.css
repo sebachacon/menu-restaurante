@@ -112,3 +112,39 @@ header {
           { display: none; }
           .section.active
           { display: block; }
+
+          /* ──
+          Category filter pills ──────────────────────────────── */
+         .filter-bar
+          { 
+            display:
+          flex;
+          gap:
+          8px;
+           flex-wrap: wrap;
+           margin-bottom: 1.75rem;
+           }
+           .pill
+          {
+ padding:
+          5px 14px;
+           border-radius: 20px;
+          font-size: 0.8rem;
+            font-weight: 500;
+ border:
+          1.5px solid var(--border);
+           background: var(--paper);
+
+ color:
+          var(--muted); 
+           cursor:
+          pointer;
+          transition: all .15s;
+          letter-spacing: 0.02em;
+}
+.pill:hover
+          { border-color: var(--accent); color: var(--accent); }
+
+.pill.active
+          { background: var(--ink); color: var(--cream); border-color:
+          var(--ink); }
