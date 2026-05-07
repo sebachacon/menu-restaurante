@@ -601,6 +601,8 @@ font-weight: 700;
 .db-dot.connected { background: #2A9D5C; }
 
 .db-dot.error { background: var(--danger); }
+
+ @media (max-width: 600px) {
 header {  flex-direction: column; align-items: flex-start; gap: 12px; }
  .stats-bar { grid-template-columns: 1fr 1fr; }
 
