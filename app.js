@@ -236,3 +236,46 @@ ${c.icon} ${c.name}
 </div>${rows}</div>`;
 }).join('');
 }
+
+/* --- Estadísticas --- */
+function renderStats(dishes) {
+const cats = new Set(dishes.map(d => d.cat)).size;
+const prices = dishes.map(d => Number(d.price)).filter(p => p > 0);
+const avg = prices.length ? Math.round(prices.reduce((a,b)=>a+b,0)/prices.length) : 0;
+document.getElementById('stat-total').textContent = dishes.length;
+document.getElementById('stat-cats').textContent = cats;
+document.getElementById('stat-avg').textContent = '₡' + avg.toLocaleString('es-CR');
+}
+	 
+/* ════════════════════════════════════════════════════════════
+UI HELPERS
+════════════════════════════════════════════════════════════ */
+function switchTab(tab) {
+document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', ['menu','admin'][i] === tab));
+document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+document.getElementById('section-' + tab).classList.add('active');
+}
+
+function setDbStatus(state) {
+const dot = document.getElementById('db-dot');
+const label = document.getElementById('db-label');
+dot.className = 'db-dot';
+if (state === 'connected') { dot.classList.add('connected'); label.textContent = 'Firebase conectado'; }
+else if (state === 'demo') { label.textContent = 'Modo demo'; }
+else if (state === 'error') { dot.classList.add('error'); label.textContent = 'Error de conexión'; }
+else { label.textContent = 'Sin conexión'; }
+}
+	 
+let toastTimer;
+function showToast(msg, type='info') {
+const t = document.getElementById('toast');
+t.textContent = msg;
+t.className = 'toast ' + type + ' show';
+clearTimeout(toastTimer);
+toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+	 
+function esc(str) {
+if (!str) return '';
+return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
