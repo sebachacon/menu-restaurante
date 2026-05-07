@@ -17,3 +17,21 @@
         --font-display: 'Playfair Display', Georgia, serif;
         --font-body: 'DM Sans', sans-serif;
     }
+    *,
+          *::before, *::after { box-sizing: border-box; margin: 0; padding: 0;
+          }
+    body
+          {      
+         font-family: var(--font-body);    
+         background: var(--cream);
+         color:
+          var(--ink);
+          min-height: 100vh;
+          font-size: 15px;
+          line-height: 1.6;
+} 
+
+/* header */
+header{
+    
+}
