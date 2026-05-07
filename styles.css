@@ -529,3 +529,75 @@ font-weight: 700;
  z-index: 999;
 
 }
+.toast.success { background: var(--success); color: #fff; }
+
+.toast.error { background: var(--danger); color: #fff; }
+
+.toast.info { background: var(--ink); color: var(--cream); }
+
+
+.loading {
+
+ text-align: center;
+
+ padding: 3rem;
+
+ color: var(--muted);
+
+ font-size: 0.9rem;
+
+}
+
+.empty-state {
+
+ text-align: center;
+
+ padding: 3rem 1rem;
+
+ color: var(--muted);
+
+ font-size: 0.9rem;
+
+}
+
+.empty-state span { font-size: 2.5rem; display: block; margin-bottom: 0.75rem;  }
+
+/* ── Firebase status indicator ──────────────────────────── */
+
+.db-status {
+
+ display: inline-flex;
+
+ align-items: center;
+
+ gap: 6px;
+
+ font-size: 0.75rem;
+
+ color: var(--muted);
+
+ padding: 4px 10px;
+
+ border-radius: 20px;
+
+ border: 1px solid var(--border);
+
+ background: var(--paper);
+
+}
+
+.db-dot {
+
+ width: 7px; height: 7px;
+
+ border-radius: 50%;
+
+ background: #ccc;
+
+ transition: background .3s;
+
+}
+
+.db-dot.connected { background: #2A9D5C; }
+
+.db-dot.error { background: var(--danger); }
