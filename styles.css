@@ -148,3 +148,38 @@ header {
 .pill.active
           { background: var(--ink); color: var(--cream); border-color:
           var(--ink); }
+          .cat-heading
+          {
+ display:
+          flex;
+          align-items: center;
+ gap:
+          10px;
+           margin:
+          2rem 0 0.75rem;
+}
+.cat-heading:first-of-type
+          { margin-top: 0; }
+.cat-heading
+          h2 {
+            font-family: var(--font-display);
+          font-size: 1.15rem;
+          font-weight: 600;
+ color:
+          var(--ink);
+          }
+.cat-line
+{
+flex:
+          1;
+ height:
+          1px;
+           background: var(--border);
+}
+.cat-icon
+          {
+          font-size: 1.1rem;
+          
+}
+/* ──
+          Dish card (menu view) ──────────────────────────────── */
