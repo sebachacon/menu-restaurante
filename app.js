@@ -195,3 +195,44 @@ renderMenu(list);
 });
 }
 }
+
+/* --- Panel de administración --- */
+function renderAdmin(dishes) {
+const sel = document.getElementById('f-cat');
+sel.innerHTML = CATS.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+	 
+const el = document.getElementById('admin-list');
+document.getElementById('admin-count').textContent = `(${dishes.length} platillos)`;
+	 
+if (!dishes.length) {
+el.innerHTML = '<div class="empty-state"><span>✏️</span>Agrega el primer platillo usando el formulario de arriba.</div>';
+return;
+}
+	 
+const byCat = {};
+dishes.forEach(d => (byCat[d.cat] = byCat[d.cat] || []).push(d));
+	 
+el.innerHTML = Object.entries(byCat).map(([catId, items]) => {
+const c = CATS.find(x => x.id === catId) || CATS[5];
+const rows = items.map(d => `
+<div class="admin-row">
+<div class="admin-emoji">${d.icon || '🍽️'}</div>
+<div class="admin-info">
+<div class="admin-name">
+${esc(d.name)}
+<span class="cat-badge" style="background:${c.bg};color:${c.color}">${c.name}</span>
+</div>
+<div class="admin-sub">₡${Number(d.price).toLocaleString('es-CR')}${d.desc ? ' · ' + esc(d.desc).substring(0,50) + (d.desc.length>50?'…':'') : ''}</div>
+</div>
+<div class="admin-actions">
+<button class="btn btn-sm btn-edit" onclick="editDish('${d.id}')">✏️ Editar</button>
+<button class="btn btn-sm btn-danger" onclick="deleteDish('${d.id}','${esc(d.name)}')">🗑️</button>
+</div>
+</div>`).join('');
+	 
+return `<div style="margin-bottom:1.25rem">
+<div style="font-size:0.78rem;font-weight:500;color:${c.color};margin-bottom:8px;display:flex;align-items:center;gap:5px">
+${c.icon} ${c.name}
+</div>${rows}</div>`;
+}).join('');
+}
